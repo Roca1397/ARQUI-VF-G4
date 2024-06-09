@@ -27,26 +27,25 @@ public class Booking {
     private Double financialTargetAmount; // cantidadobjetivofinanciero
     private Double financialPercentage;
     private Double progress;
-
-    //user id
-    @ManyToOne
-    @JoinColumn(name = "user_id",nullable = false)
-    Users user;
     //reservation tpye
     @ManyToOne
     @JoinColumn(name = "reservationType_id")
     ReservationType reservationType;
+    //user id
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
+    Users user;
     //Transaction
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "booking",cascade = CascadeType.ALL)
     List<Transaction> transactions;
 
-    public Booking(String description, Date creationDate, Double financialTargetAmount, Double financialPercentage, Double progress, Users user, ReservationType reservationType) {
+    public Booking(String description, Date creationDate, Double financialTargetAmount, Double financialPercentage, Double progress,ReservationType reservationType,Users user) {
         this.description = description;
         this.creationDate = creationDate;
         this.financialTargetAmount = financialTargetAmount;
         this.financialPercentage = financialPercentage;
         this.progress = progress;
-        this.user = user;
         this.reservationType = reservationType;
+        this.user = user;
     }
 }
