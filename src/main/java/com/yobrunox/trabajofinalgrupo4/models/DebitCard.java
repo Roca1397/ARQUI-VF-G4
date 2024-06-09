@@ -17,25 +17,29 @@ public class DebitCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @Column(nullable = false)
     private String numberCard;
-
     @Column(nullable = false)
     private Date expirationDate;
-
     @Column(nullable = false)
-    private Integer CVV;
-
-    private String Password;
+    private Integer cvv;
+    private String password;
 
     @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "Bank_id",nullable = false)
+    @JoinColumn(name = "bank_id",nullable = false)
     private Bank bank;
 
     //Usuario
     @OneToOne
-    @JoinColumn(name = "User_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
+    public DebitCard(String numberCard, Date expirationDate, Integer cvv, String password, Bank bank, Users user) {
+        this.numberCard = numberCard;
+        this.expirationDate = expirationDate;
+        this.cvv = cvv;
+        this.password = password;
+        this.bank = bank;
+        this.user = user;
+    }
 }
