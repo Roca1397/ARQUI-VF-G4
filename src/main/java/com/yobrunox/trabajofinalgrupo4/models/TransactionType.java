@@ -17,10 +17,8 @@ public class TransactionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @Column(nullable = false)
     private String description;
-
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "transactionType")
-    private List<Transaction> transaction;
+    List<Transaction> transaction;
 }

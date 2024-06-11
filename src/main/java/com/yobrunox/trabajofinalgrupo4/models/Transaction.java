@@ -18,27 +18,27 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @Column(nullable = false)
     private Date date;
-
     private Double amount;
-
-
     @ManyToOne()
-    @JoinColumn(name = "User_id")
-    private Users user;
-
-
+    @JoinColumn(name = "user_id")
+    Users user;
     @ManyToOne
-    @JoinColumn(name = "Booking_id")
-    private Booking booking;
-
+    @JoinColumn(name = "booking_id")
+    Booking booking;
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "transaction")
-    private Notifications notifications;
-
+    Notifications notifications;
     @ManyToOne
-    @JoinColumn(name = "TransactionType_id")
-    private TransactionType transactionType;
+    @JoinColumn(name = "transactionType_id")
+    TransactionType transactionType;
 
+    public Transaction(Date date, Double amount, Users user, Booking booking, Notifications notifications, TransactionType transactionType) {
+        this.date = date;
+        this.amount = amount;
+        this.user = user;
+        this.booking = booking;
+        this.notifications = notifications;
+        this.transactionType = transactionType;
+    }
 }
