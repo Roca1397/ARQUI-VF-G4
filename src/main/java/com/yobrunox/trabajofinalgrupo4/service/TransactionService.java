@@ -20,7 +20,7 @@ public class TransactionService {
         this.transactionTypeRepository = transactionTypeRepository;
         this.notificationsRepository = notificationsRepository;
     }
-
+/*
     public Transaction Add (BookingDto bookingDto) {
         ReservationType reservationType = new ReservationType();
         reservationType.setId(bookingDto.getReservationTypeId());
@@ -30,7 +30,7 @@ public class TransactionService {
         Booking booking = new Booking(bookingDto.getDescription(),bookingDto.getCreationDate(),bookingDto.getFinancialTargetAmount(),
                 bookingDto.getFinancialPercentage(),bookingDto.getProgress(),reservationType,users);
         return bookingRepository.save(booking);
-    }
+    }*/
 
 
 }
