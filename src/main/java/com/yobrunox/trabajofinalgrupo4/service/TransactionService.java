@@ -1,9 +1,12 @@
 package com.yobrunox.trabajofinalgrupo4.service;
 
 import com.yobrunox.trabajofinalgrupo4.dto.User.BookingDto;
+import com.yobrunox.trabajofinalgrupo4.dto.User.TransactionDto;
 import com.yobrunox.trabajofinalgrupo4.models.*;
 import com.yobrunox.trabajofinalgrupo4.repository.*;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class TransactionService {
@@ -20,17 +23,15 @@ public class TransactionService {
         this.transactionTypeRepository = transactionTypeRepository;
         this.notificationsRepository = notificationsRepository;
     }
-/*
-    public Transaction Add (BookingDto bookingDto) {
-        ReservationType reservationType = new ReservationType();
-        reservationType.setId(bookingDto.getReservationTypeId());
+
+    public Transaction Add (TransactionDto transactionDto) {
+        TransactionType transactionType = new TransactionType();
+        transactionType.setId(transactionDto.getTransactionTypeId());
         Users users = new Users();
-        users.setId(bookingDto.getUserId());
-        users.setRole(Role.USER);
-        Booking booking = new Booking(bookingDto.getDescription(),bookingDto.getCreationDate(),bookingDto.getFinancialTargetAmount(),
-                bookingDto.getFinancialPercentage(),bookingDto.getProgress(),reservationType,users);
-        return bookingRepository.save(booking);
-    }*/
-
-
+        users.setId(transactionDto.getUserId());
+        Booking booking= new Booking();
+        booking.setId(transactionDto.getBookingId());
+        Transaction transaction = new Transaction(transactionDto.getDate(),transactionDto.getAmount(),users,booking,transactionType);
+        return transactionRepository.save(transaction);
+    }
 }

@@ -41,4 +41,12 @@ public class Transaction {
         this.notifications = notifications;
         this.transactionType = transactionType;
     }
+
+    public Transaction(Date date, Double amount, Users user, Booking booking, TransactionType transactionType) {
+        this.date = date;
+        this.amount = amount;
+        this.user = user;
+        this.booking = booking;
+        this.transactionType = transactionType;
+    }
 }
