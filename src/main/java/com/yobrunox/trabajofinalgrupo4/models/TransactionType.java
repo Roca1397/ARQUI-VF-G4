@@ -21,4 +21,8 @@ public class TransactionType {
     private String description;
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "transactionType")
     List<Transaction> transaction;
+
+    public TransactionType(String description) {
+        this.description = description;
+    }
 }
