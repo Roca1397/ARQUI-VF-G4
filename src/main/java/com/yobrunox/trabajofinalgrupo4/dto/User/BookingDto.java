@@ -10,7 +10,6 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingDto {
-    private Integer id;
     private String description;
     private Date creationDate;
     private Double financialTargetAmount;
@@ -18,6 +17,4 @@ public class BookingDto {
     private Double progress;
     private Integer reservationTypeId;
     private Integer userId;
-
-
 }

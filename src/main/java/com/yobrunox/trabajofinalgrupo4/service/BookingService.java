@@ -39,7 +39,7 @@ public class BookingService {
         List<BookingDto> listaDto = new ArrayList<>();
         BookingDto item;
         for(Booking b: lista){
-            item = new BookingDto(b.getId(),b.getDescription(),b.getCreationDate(),b.getFinancialTargetAmount(),b.getFinancialPercentage()
+            item = new BookingDto(b.getDescription(),b.getCreationDate(),b.getFinancialTargetAmount(),b.getFinancialPercentage()
                     ,b.getProgress(),b.getReservationType().getId(),b.getUser().getId());
             listaDto.add(item);
         }
