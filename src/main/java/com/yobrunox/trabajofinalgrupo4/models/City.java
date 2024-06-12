@@ -1,5 +1,6 @@
 package com.yobrunox.trabajofinalgrupo4.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +18,6 @@ public class City {
     private Integer id;
     @Column(nullable = false)
     private String nameCity;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
     Country country;

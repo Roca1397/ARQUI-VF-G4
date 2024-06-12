@@ -19,7 +19,7 @@ public class BankController {
         this.bankService = bankService;
     }
 
-    @PostMapping("/CrearBanco")
+    @PostMapping("/Crearbanco")
     public ResponseEntity<Bank> Add (@RequestBody BankDto bankDto) {
         return new ResponseEntity<>(bankService.Add(bankDto), HttpStatus.CREATED);
     }

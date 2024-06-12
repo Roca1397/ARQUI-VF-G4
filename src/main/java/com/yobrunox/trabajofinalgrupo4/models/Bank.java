@@ -16,20 +16,16 @@ public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     @Column(nullable = false)
     private String nameBank;
     private String addressBank;
-
     @Column(nullable = false)
     private String phoneBank;
-
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinColumn(name = "City_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
     City city;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "bank", cascade = CascadeType.ALL)
-    private List<DebitCard> debitCards;
+    List<DebitCard> debitCards;
 
     public Bank(String nameBank, String addressBank, String phoneBank, City city) {
         this.nameBank = nameBank;

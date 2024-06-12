@@ -25,7 +25,6 @@ public class BankService {
         Bank bank = new Bank(bankDto.getNameBank(),bankDto.getAddressBank(),bankDto.getPhoneBank(),city);
         return bankRepository.save(bank);
     }
-
     public java.util.List<BankDto> getAll() {
         java.util.List<Bank> lista = bankRepository.findAll();
         List<BankDto> listaDto = new ArrayList<>();

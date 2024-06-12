@@ -25,9 +25,9 @@ public class DebitCard {
     private Integer cvv;
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_id",nullable = false)
-    private Bank bank;
+    Bank bank;
 
     //Usuario
     @OneToOne
