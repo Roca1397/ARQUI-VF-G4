@@ -10,7 +10,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DebitCardDto {
-    private Integer id;
     private String numberCard;
     private Date expirationDate;
     private Integer cvv;
