@@ -18,13 +18,10 @@ public class ReservationType {
     private Integer id;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
-    private String description;
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "reservationType",cascade = CascadeType.ALL)
     private List<Booking> bookings;
 
-    public ReservationType(String name, String description) {
+    public ReservationType(String name) {
         this.name = name;
-        this.description = description;
     }
 }

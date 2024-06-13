@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Booking {
     @Column(nullable = false)
     private String description;
 
-    private Date creationDate;
+    private LocalDate creationDate = LocalDate.now();
 
     private Double financialTargetAmount; // cantidadobjetivofinanciero
     private Double financialPercentage;
@@ -38,9 +39,8 @@ public class Booking {
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "booking",cascade = CascadeType.ALL)
     List<Transaction> transactions;
 
-    public Booking(String description, Date creationDate, Double financialTargetAmount, Double financialPercentage, Double progress,ReservationType reservationType,Users user) {
+    public Booking(String description,Double financialTargetAmount, Double financialPercentage, Double progress,ReservationType reservationType,Users user) {
         this.description = description;
-        this.creationDate = creationDate;
         this.financialTargetAmount = financialTargetAmount;
         this.financialPercentage = financialPercentage;
         this.progress = progress;

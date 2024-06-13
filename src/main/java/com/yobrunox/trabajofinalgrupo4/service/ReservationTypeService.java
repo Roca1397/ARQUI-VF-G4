@@ -18,7 +18,7 @@ public class ReservationTypeService {
 
 
     public ReservationType Add (ReservationTypeDto reservationTypeDto) {
-        ReservationType reservationType = new ReservationType(reservationTypeDto.getName(),reservationTypeDto.getDescription());
+        ReservationType reservationType = new ReservationType(reservationTypeDto.getName());
         return reservationTypeRepository.save(reservationType);
     }
     public java.util.List<ReservationTypeDto> getAll() {
@@ -26,7 +26,7 @@ public class ReservationTypeService {
         List<ReservationTypeDto> listaDto = new ArrayList<>();
         ReservationTypeDto item;
         for(ReservationType tr: lista){
-            item = new ReservationTypeDto(tr.getName(),tr.getDescription());
+            item = new ReservationTypeDto(tr.getName());
             listaDto.add(item);
         }
         return listaDto;

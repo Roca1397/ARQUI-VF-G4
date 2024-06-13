@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -11,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class BookingDto {
     private String description;
-    private Date creationDate;
+    private LocalDate creationDate;
     private Double financialTargetAmount;
     private Double financialPercentage;
     private Double progress;

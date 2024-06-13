@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ReservationTypeDto {
     private String name;
-    private String description;
 }
