@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -20,7 +21,7 @@ public class DebitCard {
     @Column(nullable = false)
     private String numberCard;
     @Column(nullable = false)
-    private Date expirationDate;
+    private LocalDate expirationDate;
     @Column(nullable = false)
     private Integer cvv;
     private String password;
@@ -34,7 +35,7 @@ public class DebitCard {
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
 
-    public DebitCard(String numberCard, Date expirationDate, Integer cvv, String password, Bank bank, Users user) {
+    public DebitCard(String numberCard, LocalDate expirationDate, Integer cvv, String password, Bank bank, Users user) {
         this.numberCard = numberCard;
         this.expirationDate = expirationDate;
         this.cvv = cvv;

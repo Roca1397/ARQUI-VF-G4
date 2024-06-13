@@ -10,6 +10,7 @@ import com.yobrunox.trabajofinalgrupo4.repository.DebitCardRepository;
 import com.yobrunox.trabajofinalgrupo4.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,4 +46,25 @@ public class DebitCardService {
         }
         return listaDto;
     }
+    public DebitCardDto actualizarDatosDebitCard(Integer id, String nuevoNumeroCard, LocalDate nuevaFechaExpiracion, Integer nuevoCvv, String nuevaPassword) {
+    DebitCard debitCard = debitCardRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Tarjeta de débito no encontrada con ID: " + id));
+
+    debitCard.setNumberCard(nuevoNumeroCard);
+    debitCard.setExpirationDate(nuevaFechaExpiracion);
+    debitCard.setCvv(nuevoCvv);
+    debitCard.setPassword(nuevaPassword);
+
+    debitCard = debitCardRepository.save(debitCard);
+
+    return new DebitCardDto(
+            debitCard.getNumberCard(),
+            debitCard.getExpirationDate(),
+            debitCard.getCvv(),
+            debitCard.getPassword(),
+            debitCard.getBank().getId(),
+            debitCard.getUser().getId()
+    );
+}
+
 }
