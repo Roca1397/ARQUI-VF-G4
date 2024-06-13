@@ -29,24 +29,19 @@ public class Transaction {
     Booking booking;
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "transaction")
     Notifications notifications;
-    @ManyToOne
-    @JoinColumn(name = "transactionType_id")
-    TransactionType transactionType;
 
-    public Transaction(Date date, Double amount, Users user, Booking booking, Notifications notifications, TransactionType transactionType) {
+    public Transaction(Date date, Double amount, Users user, Booking booking, Notifications notifications) {
         this.date = date;
         this.amount = amount;
         this.user = user;
         this.booking = booking;
         this.notifications = notifications;
-        this.transactionType = transactionType;
     }
 
-    public Transaction(Date date, Double amount, Users user, Booking booking, TransactionType transactionType) {
+    public Transaction(Date date, Double amount, Users user, Booking booking) {
         this.date = date;
         this.amount = amount;
         this.user = user;
         this.booking = booking;
-        this.transactionType = transactionType;
     }
 }

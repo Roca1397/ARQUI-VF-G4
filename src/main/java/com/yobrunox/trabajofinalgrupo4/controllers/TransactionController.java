@@ -15,8 +15,13 @@ public class TransactionController {
     public TransactionController(TransactionService transactionService) {
         this.transactionService = transactionService;
     }
-    @PostMapping("/CrearTransaccion")
-    public ResponseEntity<Transaction> Add (@RequestBody TransactionDto transactionDto) {
-        return new ResponseEntity<>(transactionService.Add(transactionDto), HttpStatus.CREATED);
+    @PostMapping("/CrearTransaccion/{userId}/{bookingId}")
+    public ResponseEntity<Transaction> addTransaction(
+            @PathVariable Integer userId,
+            @PathVariable Integer bookingId,
+            @RequestBody TransactionDto transactionDto) {
+
+        Transaction transaction = transactionService.addTransaction(userId, bookingId, transactionDto);
+        return ResponseEntity.ok(transaction);
     }
 }

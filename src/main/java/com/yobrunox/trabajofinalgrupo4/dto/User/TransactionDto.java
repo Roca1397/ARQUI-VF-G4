@@ -14,7 +14,6 @@ import java.util.Date;
 public class TransactionDto {
     private Date date;
     private Double amount;
-    private Integer transactionTypeId;
     private Integer userId;
     private Integer bookingId;
 }
