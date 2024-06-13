@@ -37,4 +37,13 @@ public class DebitCardController {
             @RequestParam String nuevaPassword) {
         return debitCardService.actualizarDatosDebitCard(id, nuevoNumeroCard, nuevaFechaExpiracion, nuevoCvv, nuevaPassword);
     }
+    @GetMapping("/VerDatosTarjeta/{id}")
+    public ResponseEntity<DebitCardDto> getDebitCardById(@PathVariable Integer id) {
+        DebitCardDto debitCardDto = debitCardService.getDebitCardById(id);
+        if (debitCardDto != null) {
+            return ResponseEntity.ok(debitCardDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

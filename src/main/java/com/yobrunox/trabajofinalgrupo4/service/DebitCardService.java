@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DebitCardService {
@@ -65,6 +66,21 @@ public class DebitCardService {
             debitCard.getBank().getId(),
             debitCard.getUser().getId()
     );
-}
+    }
+    public DebitCardDto getDebitCardById(Integer id) {
+        Optional<DebitCard> debitCardOptional = debitCardRepository.findById(id);
+        if (debitCardOptional.isPresent()) {
+            DebitCard debitCard = debitCardOptional.get();
+            return new DebitCardDto(
+                    debitCard.getNumberCard(),
+                    debitCard.getExpirationDate(),
+                    debitCard.getCvv(),
+                    debitCard.getPassword(),
+                    debitCard.getBank().getId(),
+                    debitCard.getUser().getId()
+            );
+        }
+        return null;
+    }
 
 }
