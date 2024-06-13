@@ -30,16 +30,16 @@ public class Users implements UserDetails {
     private String dni;
     @Column(nullable = false,unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String username;
     private String password;
     private Date registerDate;
     private String address;
     private String phone;
-    private Double balance; //Saldo
+    private Double balance;
     @ManyToOne
-    @JoinColumn(name = "City_id",nullable = false)
-    private City city;
+    @JoinColumn(name = "city_id",nullable = false)
+    City city;
     @Enumerated(EnumType.STRING)
     Role role;
     //Transaction
@@ -50,7 +50,7 @@ public class Users implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "user")
     private List<Booking> bookings;
 
-    //debitcard
+    //Debitcard
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "user",optional = false)
     private DebitCard debitCard;
