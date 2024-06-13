@@ -15,13 +15,28 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
     @PostMapping("/CrearTransaccion/{userId}/{bookingId}")
+    public ResponseEntity<?> addTransaction(
+            @PathVariable Integer userId,
+            @PathVariable Integer bookingId,
+            @RequestBody TransactionDto transactionDto) {
+        try {
+            TransactionDto createdTransaction = transactionService.addTransaction(userId, bookingId, transactionDto);
+            return ResponseEntity.ok(createdTransaction);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    /*
     public ResponseEntity<TransactionDto> addTransaction(
             @PathVariable Integer userId,
             @PathVariable Integer bookingId,
             @RequestBody TransactionDto transactionDto) {
-
+        try {
         TransactionDto createdTransaction = transactionService.addTransaction(userId, bookingId, transactionDto);
-        return ResponseEntity.ok(createdTransaction);
-    }
+        return ResponseEntity.ok(createdTransaction);}
+        catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }*/
 
 }

@@ -4,6 +4,7 @@ import com.yobrunox.trabajofinalgrupo4.dto.User.LoginDTO;
 import com.yobrunox.trabajofinalgrupo4.dto.User.RegisterDTO;
 import com.yobrunox.trabajofinalgrupo4.dto.User.UserResponse;
 import com.yobrunox.trabajofinalgrupo4.models.City;
+import com.yobrunox.trabajofinalgrupo4.models.DebitCard;
 import com.yobrunox.trabajofinalgrupo4.models.Role;
 import com.yobrunox.trabajofinalgrupo4.models.Users;
 import com.yobrunox.trabajofinalgrupo4.repository.CityRepository;
@@ -14,6 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -85,5 +87,24 @@ public class UserService {
                 usuario.getPhone(),
                 usuario.getCity().getId()
         );
+    }
+    @Transactional
+    public void deposit(Integer userId, Double amount) {
+        // Buscar al usuario por su ID
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + userId));
+
+        // Verificar que el usuario tenga una DebitCard registrada
+        DebitCard debitCard = user.getDebitCard();
+        if (debitCard == null) {
+            throw new RuntimeException("El usuario no tiene una tarjeta de débito registrada.");
+        }
+
+        // Realizar el depósito
+        double newBalance = user.getBalance() + amount;
+        user.setBalance(newBalance);
+
+        // Guardar los cambios
+        userRepository.save(user);
     }
 }

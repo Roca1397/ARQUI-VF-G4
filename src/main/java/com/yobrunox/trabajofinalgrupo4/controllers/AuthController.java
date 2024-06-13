@@ -32,4 +32,15 @@ public class AuthController {
         RegisterDTO updatedUser = userService.actualizarDatosUsuario(id, registerDTO);
         return ResponseEntity.ok(updatedUser);
     }
+
+    @PostMapping("/Deposito/{userId}")
+    public ResponseEntity<String> deposit(@PathVariable Integer userId, @RequestParam Double amount) {
+        try {
+            userService.deposit(userId, amount);
+            return ResponseEntity.ok("Depósito realizado exitosamente.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

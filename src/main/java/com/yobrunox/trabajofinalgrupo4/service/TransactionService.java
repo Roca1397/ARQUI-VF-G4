@@ -22,18 +22,21 @@ public class TransactionService {
     public TransactionDto addTransaction(Integer userId, Integer bookingId, TransactionDto transactionDto) {
         Users user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + userId));
-
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + bookingId));
-
+        Double amount = transactionDto.getAmount();
+        if (user.getBalance() < amount) {
+            throw new RuntimeException("Saldo insuficiente para realizar la transacción.");
+        }
         Transaction transaction = new Transaction(
                 transactionDto.getAmount(),
                 user,
                 booking);
 
         transaction = transactionRepository.save(transaction);
-
         updateBookingProgress(booking);
+
+        user.setBalance(user.getBalance()-transaction.getAmount());
 
         return TransactionDto.builder()
                 .date(transaction.getDate())
