@@ -3,7 +3,6 @@ package com.yobrunox.trabajofinalgrupo4.controllers;
 import com.yobrunox.trabajofinalgrupo4.dto.User.TransactionDto;
 import com.yobrunox.trabajofinalgrupo4.models.Transaction;
 import com.yobrunox.trabajofinalgrupo4.service.TransactionService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +15,13 @@ public class TransactionController {
         this.transactionService = transactionService;
     }
     @PostMapping("/CrearTransaccion/{userId}/{bookingId}")
-    public ResponseEntity<Transaction> addTransaction(
+    public ResponseEntity<TransactionDto> addTransaction(
             @PathVariable Integer userId,
             @PathVariable Integer bookingId,
             @RequestBody TransactionDto transactionDto) {
 
-        Transaction transaction = transactionService.addTransaction(userId, bookingId, transactionDto);
-        return ResponseEntity.ok(transaction);
+        TransactionDto createdTransaction = transactionService.addTransaction(userId, bookingId, transactionDto);
+        return ResponseEntity.ok(createdTransaction);
     }
+
 }

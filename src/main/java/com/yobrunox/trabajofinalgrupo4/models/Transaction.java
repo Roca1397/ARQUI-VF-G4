@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.aspectj.weaver.ast.Not;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,7 +20,7 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date= LocalDate.now();
     private Double amount;
     @ManyToOne()
     @JoinColumn(name = "user_id")
@@ -30,7 +31,7 @@ public class Transaction {
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "transaction")
     Notifications notifications;
 
-    public Transaction(Date date, Double amount, Users user, Booking booking, Notifications notifications) {
+    public Transaction(LocalDate date, Double amount, Users user, Booking booking, Notifications notifications) {
         this.date = date;
         this.amount = amount;
         this.user = user;
@@ -38,8 +39,7 @@ public class Transaction {
         this.notifications = notifications;
     }
 
-    public Transaction(Date date, Double amount, Users user, Booking booking) {
-        this.date = date;
+    public Transaction(Double amount, Users user, Booking booking) {
         this.amount = amount;
         this.user = user;
         this.booking = booking;

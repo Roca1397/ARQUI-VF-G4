@@ -1,12 +1,9 @@
 package com.yobrunox.trabajofinalgrupo4.service;
-
-import com.yobrunox.trabajofinalgrupo4.dto.User.BookingDto;
 import com.yobrunox.trabajofinalgrupo4.dto.User.TransactionDto;
 import com.yobrunox.trabajofinalgrupo4.models.*;
 import com.yobrunox.trabajofinalgrupo4.repository.*;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TransactionService {
@@ -21,30 +18,35 @@ public class TransactionService {
         this.bookingRepository = bookingRepository;
         this.notificationsRepository = notificationsRepository;
     }
-/*
-    public Transaction Add (TransactionDto transactionDto) {
-        TransactionType transactionType = new TransactionType();
-        transactionType.setId(transactionDto.getTransactionTypeId());
-        Users users = new Users();
-        users.setId(transactionDto.getUserId());
-        Booking booking= new Booking();
-        booking.setId(transactionDto.getBookingId());
-        Transaction transaction = new Transaction(transactionDto.getDate(),transactionDto.getAmount(),users,booking,transactionType);
-        return transactionRepository.save(transaction);
-    }*/
-public Transaction addTransaction(Integer userId, Integer bookingId, TransactionDto transactionDto) {
-    Users user = userRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + userId));
+    @Transactional
+    public TransactionDto addTransaction(Integer userId, Integer bookingId, TransactionDto transactionDto) {
+        Users user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + userId));
 
-    Booking booking = bookingRepository.findById(bookingId)
-            .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + bookingId));
-    Transaction transaction = new Transaction(
-            transactionDto.getDate(),
-            transactionDto.getAmount(),
-            user,
-            booking
-    );
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Reserva no encontrada con ID: " + bookingId));
 
-    return transactionRepository.save(transaction);
-}
+        Transaction transaction = new Transaction(
+                transactionDto.getAmount(),
+                user,
+                booking);
+
+        transaction = transactionRepository.save(transaction);
+
+        updateBookingProgress(booking);
+
+        return TransactionDto.builder()
+                .date(transaction.getDate())
+                .amount(transaction.getAmount())
+                .userId(userId)
+                .bookingId(bookingId)
+                .build();
+    }
+    private void updateBookingProgress(Booking booking) {
+        Double totalAmount = booking.getTransactions().stream()
+                .mapToDouble(Transaction::getAmount)
+                .sum();
+        booking.setProgress(totalAmount);
+        bookingRepository.save(booking);
+    }
 }
