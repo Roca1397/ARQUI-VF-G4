@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 public class AuthController {
     private final UserService userService;
-
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@RequestBody RegisterDTO registerDTO){
         return ResponseEntity.ok(userService.register(registerDTO));
@@ -32,15 +31,4 @@ public class AuthController {
         RegisterDTO updatedUser = userService.actualizarDatosUsuario(id, registerDTO);
         return ResponseEntity.ok(updatedUser);
     }
-
-    @PostMapping("/Deposito/{userId}")
-    public ResponseEntity<String> deposit(@PathVariable Integer userId, @RequestParam Double amount) {
-        try {
-            userService.deposit(userId, amount);
-            return ResponseEntity.ok("Depósito realizado exitosamente.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
 }

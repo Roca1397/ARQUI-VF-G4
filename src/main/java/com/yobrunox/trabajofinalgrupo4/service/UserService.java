@@ -88,23 +88,5 @@ public class UserService {
                 usuario.getCity().getId()
         );
     }
-    @Transactional
-    public void deposit(Integer userId, Double amount) {
-        // Buscar al usuario por su ID
-        Users user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + userId));
 
-        // Verificar que el usuario tenga una DebitCard registrada
-        DebitCard debitCard = user.getDebitCard();
-        if (debitCard == null) {
-            throw new RuntimeException("El usuario no tiene una tarjeta de débito registrada.");
-        }
-
-        // Realizar el depósito
-        double newBalance = user.getBalance() + amount;
-        user.setBalance(newBalance);
-
-        // Guardar los cambios
-        userRepository.save(user);
-    }
 }
