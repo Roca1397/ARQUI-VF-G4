@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 @RestController
-@RequestMapping("api/authenticate")
+@RequestMapping("api/user")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class DebitCardController {
     final DebitCardService debitCardService;
 

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @AllArgsConstructor
 @RequestMapping("api/authenticate")
-
+@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
     private final UserService userService;
     @PostMapping("/register")
