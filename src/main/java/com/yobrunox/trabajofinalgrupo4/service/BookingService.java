@@ -1,12 +1,10 @@
 package com.yobrunox.trabajofinalgrupo4.service;
 
 import com.yobrunox.trabajofinalgrupo4.dto.User.BookingDto;
-import com.yobrunox.trabajofinalgrupo4.models.Booking;
-import com.yobrunox.trabajofinalgrupo4.models.ReservationType;
-import com.yobrunox.trabajofinalgrupo4.models.Role;
-import com.yobrunox.trabajofinalgrupo4.models.Users;
+import com.yobrunox.trabajofinalgrupo4.models.*;
 import com.yobrunox.trabajofinalgrupo4.repository.BookingRepository;
 import com.yobrunox.trabajofinalgrupo4.repository.ReservationTypeRepository;
+import com.yobrunox.trabajofinalgrupo4.repository.TransactionRepository;
 import com.yobrunox.trabajofinalgrupo4.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +14,13 @@ import java.util.List;
 
 @Service
 public class BookingService {
+    final TransactionRepository transactionRepository;
     final BookingRepository bookingRepository;
     final UserRepository userRepository;
     final ReservationTypeRepository reservationTypeRepository;
 
-    public BookingService(BookingRepository bookingRepository, UserRepository userRepository, ReservationTypeRepository reservationTypeRepository) {
+    public BookingService(TransactionRepository transactionRepository, BookingRepository bookingRepository, UserRepository userRepository, ReservationTypeRepository reservationTypeRepository) {
+        this.transactionRepository = transactionRepository;
         this.bookingRepository = bookingRepository;
         this.userRepository = userRepository;
         this.reservationTypeRepository = reservationTypeRepository;

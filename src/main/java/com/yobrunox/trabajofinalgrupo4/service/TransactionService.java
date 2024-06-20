@@ -34,7 +34,7 @@ public class TransactionService {
             throw new RuntimeException("Saldo insuficiente para realizar la transacción.");
         }
         Double transactionAmount = transactionDto.getAmount();
-        if (bookingId==2) {
+        if (booking.getReservationType().getId()==2) {
             transactionAmount = -transactionAmount;
         }
         Transaction transaction = new Transaction(
@@ -59,10 +59,12 @@ public class TransactionService {
         Double totalAmount = booking.getTransactions().stream()
                 .mapToDouble(Transaction::getAmount)
                 .sum();
-        if (booking.getId()==2) {
+       /* if (booking.getReservationType().getId()==2) {
             totalAmount = -totalAmount;
-        }
+        }*/
         booking.setProgress(totalAmount);
+        if(booking.getReservationType().getId()==1){
+        booking.setFinancialPercentage((booking.getProgress()/booking.getFinancialTargetAmount())*100 );}
         bookingRepository.save(booking);
     }
     @Transactional
