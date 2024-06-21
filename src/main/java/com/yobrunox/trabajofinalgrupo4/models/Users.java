@@ -1,5 +1,7 @@
 package com.yobrunox.trabajofinalgrupo4.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +39,8 @@ public class Users implements UserDetails {
     private String address;
     private String phone;
     private Double balance;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "city_id",nullable = false)
     City city;
@@ -51,7 +55,6 @@ public class Users implements UserDetails {
     private List<Booking> bookings;
 
     //Debitcard
-
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "user",optional = false)
     private DebitCard debitCard;
 

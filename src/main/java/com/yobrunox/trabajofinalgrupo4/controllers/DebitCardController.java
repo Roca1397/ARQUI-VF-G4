@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/user")
 @CrossOrigin(origins = "http://localhost:4200")
-
 public class DebitCardController {
     final DebitCardService debitCardService;
 

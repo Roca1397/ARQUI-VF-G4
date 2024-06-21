@@ -20,6 +20,8 @@ public class Country {
     private Integer id;
     @Column(nullable = false,unique = true)
     private String nameCountry;
+
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "country",cascade = CascadeType.ALL)
     List<City> cities;
 

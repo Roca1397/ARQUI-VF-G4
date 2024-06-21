@@ -18,6 +18,8 @@ public class City {
     private Integer id;
     @Column(nullable = false)
     private String nameCity;
+
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
     Country country;

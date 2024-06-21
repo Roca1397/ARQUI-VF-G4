@@ -12,6 +12,8 @@ import com.yobrunox.trabajofinalgrupo4.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,10 +33,14 @@ public class UserService {
 
     public UserResponse login(LoginDTO loginDTO){
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword()));
-        UserDetails user = userRepository.findByUser(loginDTO.getUsername()).orElseThrow();
+        //GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+user.getAuthorities());
+        Users users = userRepository.findByUser(loginDTO.getUsername()).orElseThrow();
+        UserDetails user = users;
+
         String token=jwtService.getToken(user);
         return UserResponse.builder()
                 .token(token)
+                .user(users)
                 .build();
     }
     public UserResponse register(RegisterDTO registerDTO){
@@ -58,6 +64,7 @@ public class UserService {
         userRepository.save(user);
         return UserResponse.builder()
                 .token(jwtService.getToken(user))
+                .user(user)
                 .build();
     }
     public RegisterDTO actualizarDatosUsuario(Integer id, RegisterDTO registerDTO) {

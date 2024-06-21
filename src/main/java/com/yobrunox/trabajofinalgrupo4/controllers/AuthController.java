@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
     private final UserService userService;
+
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@RequestBody RegisterDTO registerDTO){
         return ResponseEntity.ok(userService.register(registerDTO));

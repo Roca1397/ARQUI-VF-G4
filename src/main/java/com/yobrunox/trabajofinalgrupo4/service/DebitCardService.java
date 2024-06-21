@@ -32,6 +32,7 @@ public class DebitCardService {
         Users users = new Users();
         users.setId(debitCardDto.getUserId());
         users.setRole(Role.USER);
+
         DebitCard debitCard = new DebitCard(debitCardDto.getNumberCard(),debitCardDto.getExpirationDate(),debitCardDto.getCvv(),
                 debitCardDto.getPassword(),bank,users);
         return debitCardRepository.save(debitCard);
