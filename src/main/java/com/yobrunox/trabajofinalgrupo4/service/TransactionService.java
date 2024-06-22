@@ -16,12 +16,14 @@ public class TransactionService {
     final UserRepository userRepository;
     final BookingRepository bookingRepository;
     final NotificationsRepository notificationsRepository;
+    final NotificationsService notificationsService;
 
-    public TransactionService(TransactionRepository transactionRepository, UserRepository userRepository, BookingRepository bookingRepository, NotificationsRepository notificationsRepository) {
+    public TransactionService(TransactionRepository transactionRepository, UserRepository userRepository, BookingRepository bookingRepository, NotificationsRepository notificationsRepository, NotificationsService notificationsService) {
         this.transactionRepository = transactionRepository;
         this.userRepository = userRepository;
         this.bookingRepository = bookingRepository;
         this.notificationsRepository = notificationsRepository;
+        this.notificationsService = notificationsService;
     }
     @Transactional
     public TransactionDto addTransaction(Integer userId, Integer bookingId, TransactionDto transactionDto) {
@@ -45,9 +47,8 @@ public class TransactionService {
         transaction = transactionRepository.save(transaction);
         updateBookingProgress(booking);
 
-
         user.setBalance(user.getBalance()-amount);//transaction.getAmount());
-
+        notificationsService.createNotification(transaction);
         return TransactionDto.builder()
                 .date(transaction.getDate())
                 .amount(transaction.getAmount())
@@ -59,9 +60,6 @@ public class TransactionService {
         Double totalAmount = booking.getTransactions().stream()
                 .mapToDouble(Transaction::getAmount)
                 .sum();
-       /* if (booking.getReservationType().getId()==2) {
-            totalAmount = -totalAmount;
-        }*/
         booking.setProgress(totalAmount);
         if(booking.getReservationType().getId()==1){
         booking.setFinancialPercentage((booking.getProgress()/booking.getFinancialTargetAmount())*100 );}
@@ -84,6 +82,7 @@ public class TransactionService {
 
         Transaction transaction = new Transaction(amount, user, null);
         transactionRepository.save(transaction);
+        notificationsService.createNotification(transaction);
     }
     @Transactional
     public void withdraw(Integer userId, Double amount, boolean saldo, Integer bookingId) {
@@ -115,6 +114,7 @@ public class TransactionService {
 
         Transaction transaction = new Transaction(-amount, user, null);
         transactionRepository.save(transaction);
+        notificationsService.createNotification(transaction);
     }
     public List<SavingReportDto> Reporte(Integer reservationTypeId, Integer userId, LocalDate startDate, LocalDate endDate) {
         return transactionRepository.findAllByReservationTypeIdAndUserIdAndDateRange(reservationTypeId, userId, startDate, endDate)
@@ -126,4 +126,19 @@ public class TransactionService {
                 ))
                 .collect(Collectors.toList());
     }
+
+    public List<SavingReportDto> ListaTransacciones(Integer userId, LocalDate startDate, LocalDate endDate) {
+        return transactionRepository.findAlltransacciones(userId, startDate, endDate)
+                .stream()
+                .map(transaction -> {
+                    String bookingDescription = (transaction.getBooking() != null) ? transaction.getBooking().getDescription() : "";
+                    return new SavingReportDto(
+                            bookingDescription,
+                            transaction.getDate(),
+                            transaction.getAmount()
+                    );
+                })
+                .collect(Collectors.toList());
+    }
+
 }

@@ -69,5 +69,12 @@ public class TransactionController {
         Integer reservationTypeId = 2;
         return transactionService.Reporte(reservationTypeId, userId, startDate, endDate);
     }
+    @GetMapping("/transacciones/{userId}")
+    public List<SavingReportDto> Lista(
+            @PathVariable("userId") Integer userId,
+            @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        return transactionService.ListaTransacciones(userId, startDate, endDate);
+    }
 
 }

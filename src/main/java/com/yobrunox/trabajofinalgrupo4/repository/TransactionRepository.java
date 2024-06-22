@@ -21,5 +21,13 @@ public interface TransactionRepository extends JpaRepository<Transaction, Intege
             @Param("userId") Integer userId,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate);
+
+    @Query("SELECT t FROM Transaction t " +
+            "WHERE t.user.id = :userId " +
+            "AND t.date BETWEEN :startDate AND :endDate")
+    List<Transaction> findAlltransacciones(
+            @Param("userId") Integer userId,
+            @Param("startDate") LocalDate startDate,
+            @Param("endDate") LocalDate endDate);
 }
 
