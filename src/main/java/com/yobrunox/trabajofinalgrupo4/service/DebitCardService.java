@@ -69,7 +69,8 @@ public class DebitCardService {
     );
     }
     public DebitCardDto getDebitCardById(Integer id) {
-        Optional<DebitCard> debitCardOptional = debitCardRepository.findById(id);
+        Optional<DebitCard> debitCardOptional = debitCardRepository.getDebitCardByUserId(id);
+
         if (debitCardOptional.isPresent()) {
             DebitCard debitCard = debitCardOptional.get();
             return new DebitCardDto(

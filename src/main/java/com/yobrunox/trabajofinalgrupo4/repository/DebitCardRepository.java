@@ -10,4 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface DebitCardRepository extends JpaRepository<DebitCard, Integer> {
+    @Query(value = "SELECT DC FROM DebitCard DC WHERE DC.user.id = :id")
+    Optional<DebitCard> getDebitCardByUserId(@Param("id")Integer id);
 }
