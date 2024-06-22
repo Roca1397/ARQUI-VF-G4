@@ -2,9 +2,11 @@ package com.yobrunox.trabajofinalgrupo4.controllers;
 
 import com.yobrunox.trabajofinalgrupo4.dto.User.LoginDTO;
 import com.yobrunox.trabajofinalgrupo4.dto.User.RegisterDTO;
+import com.yobrunox.trabajofinalgrupo4.dto.User.UserDTO;
 import com.yobrunox.trabajofinalgrupo4.dto.User.UserResponse;
 import com.yobrunox.trabajofinalgrupo4.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -32,4 +34,7 @@ public class AuthController {
         RegisterDTO updatedUser = userService.actualizarDatosUsuario(id, registerDTO);
         return ResponseEntity.ok(updatedUser);
     }
+
+
+
 }

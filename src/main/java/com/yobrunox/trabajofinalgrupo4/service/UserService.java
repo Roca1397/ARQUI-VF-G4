@@ -2,6 +2,7 @@ package com.yobrunox.trabajofinalgrupo4.service;
 
 import com.yobrunox.trabajofinalgrupo4.dto.User.LoginDTO;
 import com.yobrunox.trabajofinalgrupo4.dto.User.RegisterDTO;
+import com.yobrunox.trabajofinalgrupo4.dto.User.UserDTO;
 import com.yobrunox.trabajofinalgrupo4.dto.User.UserResponse;
 import com.yobrunox.trabajofinalgrupo4.models.City;
 import com.yobrunox.trabajofinalgrupo4.models.DebitCard;
@@ -96,4 +97,25 @@ public class UserService {
         );
     }
 
+
+    public Double getBalance(Integer id){
+        return userRepository.getBalance(id).orElseThrow();
+    }
+
+    public UserDTO getUser(Integer id){
+        Users user = userRepository.findById(id).orElseThrow();
+        UserDTO userDTO = UserDTO.builder()
+                .id(id)
+                .name(user.getName())
+                .lastName(user.getLastName())
+                .dni(user.getDni())
+                .email(user.getEmail())
+                .username(user.getUsername())
+                .registerDate(user.getRegisterDate())
+                .address(user.getAddress())
+                .phone(user.getPhone())
+                .balance(user.getBalance())
+                .build();
+        return userDTO;
+    }
 }

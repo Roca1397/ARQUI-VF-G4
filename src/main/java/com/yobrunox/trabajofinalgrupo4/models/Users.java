@@ -38,7 +38,7 @@ public class Users implements UserDetails {
     private Date registerDate;
     private String address;
     private String phone;
-    private Double balance;
+    private Double balance = 0.0;
 
     @JsonIgnore
     @ManyToOne
